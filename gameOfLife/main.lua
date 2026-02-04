@@ -4,6 +4,9 @@
    Forked from Brian Honahan's implementation:
 
    https://github.com/brianhonohan/sketchbook/tree/main/love2d/game-of-life
+
+   With edits by Frank E. Ciszek for Video Game Development Fundamentals
+   at WVNCC.
 ]]--
 
 
@@ -79,7 +82,7 @@ function drawGridCanvas(grid, _cellWidth)
    -- set the color back to white
     love.graphics.setColor(0, 0, 0)
    -- reset to default canvas
-   love.graphics.setCanvas()
+  love.graphics.setCanvas()
 end
 
 -- Toggle cell from alive to dead or vice versa
