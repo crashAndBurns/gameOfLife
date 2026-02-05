@@ -41,9 +41,9 @@ function love.update(dt)
 end
 
 function love.draw()
-
    -- STEP 2 --
    -- draw the grid canvas
+  love.graphics.setColor(1, 1, 1, 1)
   love.graphics.draw(gridCanvas)
   
    -- STEP 4 --
@@ -61,14 +61,18 @@ function drawGridCanvas(grid, _cellWidth)
    -- set canvas to the gridCanvas
   love.graphics.setCanvas(gridCanvas)
    -- set the color to a medium grey
-    love.graphics.setColor(.5, .5, .5)
+   love.graphics.setColor(.5, .5, .5)
 
    -- Draw Grid Rows
    -- loop from 1 to grid.numRows
    --   draw a horizontal line across the screen at the correct Y coordinate
    --   (Hint: use 'i' and _cellWidth to determine the Y coordinate)
     for i = 1, grid.numRows do
-      love.graphics.line(0, 0, 0, i * _cellWidth)
+      -- FEC 2/4/2026
+      -- Note: to draw a horizontal line, start at x1 = 0, y1 = 0
+      -- x1 for each line doesn't have to move. y2 must move by the cell width,
+      -- x2 should be the width of the window and y2 should move by cell width.
+      love.graphics.line(0, i * _cellWidth, gameWidth, i * _cellWidth)
     end
 
   -- Draw Grid Columns
@@ -76,7 +80,7 @@ function drawGridCanvas(grid, _cellWidth)
    --   draw a vertical line from top to bottom of the screen at the correct X coordinate
    --   (Hint: use 'j' and _cellWidth to determine the X coordinate)
     for j = 1, grid.numCols do
-      love.graphics.line(0, 0, j * _cellWidth, 0)
+      love.graphics.line(j * _cellWidth, 0, j * _cellWidth, gameHeight)
     end
 
    -- set the color back to white
@@ -119,7 +123,9 @@ function drawGrid(grid)
     -- Drawing the squares that are alive 
     
     -- calculate X coordinate value (based on col and cellWidth)
+    xCoord = col + cellWidth
     -- calculate Y coordinate value (based on row and cellWidth)
+    yCoord = row + cellWidth
 
     -- If the cell state is alive/true...
     --   set color (bright green is nice, but you can try others)
