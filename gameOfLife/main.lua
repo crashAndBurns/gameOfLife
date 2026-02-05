@@ -305,7 +305,9 @@ function love.keypressed(key)
    --   randomize the whole grid
   if key == "space" then
     paused = not paused
-  elseif key == "r" or key == "R" then
+  end
+
+  if paused and (key == "r" or key == "R") then
     randomize(cellGrid)
   end
 end
@@ -317,7 +319,8 @@ function love.mousepressed(x, y, button, istouch, presses)
    -- If the game is paused and mouse button is 1
    --   get the cell index based on the X/Y coordinate
    --   toggle the cell
-  if button == 1 then
+  
+  if paused and button == 1 then
     local toggleCellIdx = idxFromCoord(cellGrid, x, y)
     toggleCell(cellGrid, toggleCellIdx)
   end
