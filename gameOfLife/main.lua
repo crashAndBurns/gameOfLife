@@ -272,6 +272,23 @@ end
 -- Returns nothing, as it modifies the grid in place
 -- This should loop through the grid and
 -- set to random true/false values.
+-- FEC 2/5/2026: input parameter is cellGrid
+-- first we need a double loop, to loop through the rows and columns
+-- then we need to find the cell reference, the upper left hand corner
+-- then create a random number from 1 to 100, if the number is even toggle the
+-- cell on if the number is odd toggle the cell off.
+
+function randomize(grid)
+  for k = 1, grid.numRows do
+    for l = 1, grid.numCols do
+      local randNum = math.random(100)
+      if randNum % 2 == 0 then
+        -- toggle cell on
+        toggleCell(grid, idxFromPos(grid, k, l))
+      end
+    end
+  end
+end
 
 
 
@@ -288,6 +305,8 @@ function love.keypressed(key)
    --   randomize the whole grid
   if key == "space" then
     paused = not paused
+  elseif key == "r" or key == "R" then
+    randomize(cellGrid)
   end
 end
 
