@@ -26,6 +26,11 @@ function love.load()
    stepTime = 0.2 -- the amount of time between game steps
    initGrid(cellGrid, cellWidth) -- initialize the cell grid
    drawGridCanvas(cellGrid, cellWidth) -- draw the grid to the canvas
+
+   -- FEC 2/5/2026 added a generation tracking variable for use in tracking
+   -- the number of permutations of the pattern.
+   generationNum = 0
+   font = love.graphics.newFont("/press-start-2p-font/PressStart2P-vaV7.ttf")
 end
 
 function love.update(dt)
@@ -42,6 +47,8 @@ function love.update(dt)
       stepTime = 0.2
    --     call stepGrid(cellGrid)
       stepGrid(cellGrid)
+
+    generationNum = generationNum + 1
     end
   end
 end
@@ -58,6 +65,14 @@ function love.draw()
   love.graphics.setColor(1, 1, 1, 1)
   drawGrid(cellGrid)
   love.graphics.setColor(0, 0, 0)
+
+  -- FEC 2/5/2026 Generation tracker added to the upper lefthand corner of the game
+  love.graphics.setColor(1, 0, 0)
+  
+  love.graphics.setFont(font)
+  love.graphics.print("Generation: " ..generationNum, 10, 10, 0, 2, 2)
+  love.graphics.setColor(0, 0, 0)
+
 end
 
 function love.quit()
