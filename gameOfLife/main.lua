@@ -33,11 +33,17 @@ function love.update(dt)
    -- STEP 5 -- 
    
    -- if the game is not paused
+  if not paused then
    --   reduce step time by dt
+    stepTime = stepTime - dt
    --   if step time hits 0 (or less)
+    if stepTime <= 0 then
    --     reset step time to 0.2
+      stepTime = 0.2
    --     call stepGrid(cellGrid)
-
+      stepGrid(cellGrid)
+    end
+  end
 end
 
 function love.draw()
@@ -45,9 +51,13 @@ function love.draw()
    -- draw the grid canvas
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.draw(gridCanvas)
+  love.graphics.setColor(0, 0, 0)
   
    -- STEP 4 --
    -- draw the cell grid (it has its own method)
+  love.graphics.setColor(1, 1, 1, 1)
+  drawGrid(cellGrid)
+  love.graphics.setColor(0, 0, 0)
 end
 
 function love.quit()
@@ -123,16 +133,19 @@ function drawGrid(grid)
     -- Drawing the squares that are alive 
     
     -- calculate X coordinate value (based on col and cellWidth)
-    xCoord = col + cellWidth
+    xCoord = col * cellWidth
     -- calculate Y coordinate value (based on row and cellWidth)
-    yCoord = row + cellWidth
+    yCoord = row * cellWidth
 
     -- If the cell state is alive/true...
     --   set color (bright green is nice, but you can try others)
-    
-       -- draw a filled rectangle of correct width/height at correct x/y 
-
+    love.graphics.setColor(.2, .8, .2)
+    if cell then
+       -- draw a filled rectangle of correct width/height at correct x/y
+      love.graphics.rectangle("fill", xCoord, yCoord, cellWidth, cellWidth)
+    end
     -- After the if statement, reset color to full white
+    love.graphics.setColor(0, 0, 0)
 
   end -- for loop through grid cells
 end
@@ -270,20 +283,25 @@ function love.keypressed(key)
    
    -- If the spacebar is pressed
    --   toggle paused variable
-
-   -- BONUS: randomize the grid
+       -- BONUS: randomize the grid
    -- If the 'r' key is pressed and the game is paused
    --   randomize the whole grid
+  if key == "space" then
+    paused = not paused
+  end
 end
 
 -- Handles mouse input
 function love.mousepressed(x, y, button, istouch, presses)
-
    -- STEP 7 --
    
    -- If the game is paused and mouse button is 1
    --   get the cell index based on the X/Y coordinate
    --   toggle the cell
+  if button == 1 then
+    local toggleCellIdx = idxFromCoord(cellGrid, x, y)
+    toggleCell(cellGrid, toggleCellIdx)
+  end
 end
 
       
