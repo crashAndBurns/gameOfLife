@@ -68,7 +68,8 @@ function love.draw()
 
   -- FEC 2/5/2026 Generation tracker added to the upper lefthand corner of the game
   love.graphics.setColor(1, 0, 0)
-  
+
+  -- FEC 2/5/2026 Added a new font for the generation tracker
   love.graphics.setFont(font)
   love.graphics.print("Generation: " ..generationNum, 10, 10, 0, 2, 2)
   love.graphics.setColor(0, 0, 0)
@@ -305,9 +306,6 @@ function randomize(grid)
   end
 end
 
-
-
-
 -- Handles keyboard input
 function love.keypressed(key)
 
@@ -339,6 +337,4 @@ function love.mousepressed(x, y, button, istouch, presses)
     local toggleCellIdx = idxFromCoord(cellGrid, x, y)
     toggleCell(cellGrid, toggleCellIdx)
   end
-end
-
-      
+end    
